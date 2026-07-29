@@ -23,7 +23,7 @@ model User {
   ownedWorkspaces   Workspace[]           @relation("WorkspaceOwner")
   workspaceMembers  WorkspaceMember[]
   sentInvitations   WorkspaceInvitation[] @relation("WorkspaceInvitationsSent")
-  apiKeys           ApiKey[]
+  apiKeys           ApiKey[]              @relation("UserApiKeys")
 }
 
 model Account {
@@ -357,7 +357,8 @@ model ApiKey {
   expiresAt   DateTime?
 
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user      User?     @relation("UserApiKeys", fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([workspaceId])
+  @@index([userId])
 }
