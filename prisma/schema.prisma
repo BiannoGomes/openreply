@@ -23,6 +23,7 @@ model User {
   ownedWorkspaces   Workspace[]       @relation("WorkspaceOwner")
   workspaceMembers  WorkspaceMember[]
   sentInvitations   WorkspaceInvitation[] @relation("WorkspaceInvitationsSent")
+apiKeys           ApiKey[]
 }
 
 model Account {
@@ -84,6 +85,7 @@ model Workspace {
   linkClicks        LinkClick[]
   webhookEvents     WebhookEvent[]
   operationalEvents OperationalEvent[]
+apiKeys           ApiKey[]
 
   @@index([ownerId])
 }
@@ -358,3 +360,11 @@ model ApiKey {
   id          String    @id @default(cuid())
   key         String    @unique @default(cuid())
   name        String    @default("Jarvis")
+  workspaceId String
+  createdAt   DateTime  @default(now())
+  expiresAt   DateTime?
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+}
