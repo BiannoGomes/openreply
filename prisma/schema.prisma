@@ -352,10 +352,12 @@ model ApiKey {
   key         String    @unique @default(cuid())
   name        String    @default("Jarvis")
   workspaceId String
+  userId      String?
   createdAt   DateTime  @default(now())
   expiresAt   DateTime?
 
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([workspaceId])
 }
