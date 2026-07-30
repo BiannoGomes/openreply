@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/db/client";
 
 export async function authenticateApiKey(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
