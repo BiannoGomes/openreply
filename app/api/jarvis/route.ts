@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateApiKey } from "@/lib/api-key-auth";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/db/client";
 
 export async function GET(req: NextRequest) {
   const auth = await authenticateApiKey(req);
